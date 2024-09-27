@@ -1,11 +1,8 @@
 name: persistent_navbar_pro
 description: |
-  A versatile Flutter bottom navigation bar supporting both named routes and direct widget-based navigation. 
-  Each tab maintains its own independent navigation stack, allowing for persistent state while switching between tabs. 
-  Works seamlessly with or without named routes, making it easy to integrate into new or existing projects. 
-  Customize icons, labels, and navigation logic per tab.
+  A versatile Flutter bottom navigation bar supporting both named routes and direct widget-based navigation.
 
-version: 0.0.1
+version: 0.0.3
 repository: https://github.com/codefaizan/persistent_navbar_pro
 
 environment:

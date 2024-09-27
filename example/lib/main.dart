@@ -26,26 +26,21 @@ class Dash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PersistentNavbar(
-
-        screens: [
-          const Home(),
-          const Settings()
-        ],
-        items: [
-          NavBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          NavBarItem(
-            icon: Icon(Icons.settings),
-            label: "Settings",
-          ),
-        ]
-    );
+    return PersistentNavbar(screens: const [
+      Home(),
+      Settings()
+    ], items: [
+      NavBarItem(
+        icon: const Icon(Icons.home),
+        label: "Home",
+      ),
+      NavBarItem(
+        icon: const Icon(Icons.settings),
+        label: "Settings",
+      ),
+    ]);
   }
 }
-
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -53,17 +48,17 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        
-      ),
+      appBar: AppBar(),
       body: Center(
         child: Column(
           children: [
-            Text("Home"),
+            const Text("Home"),
             ElevatedButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeSubPage())),
-                child: Text("Sub Page")
-            )
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const HomeSubPage())),
+                child: const Text("Sub Page"))
           ],
         ),
       ),
@@ -76,7 +71,7 @@ class Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text("Settings"),
       ),
@@ -92,11 +87,13 @@ class HomeSubPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Text("Home Sub Page 1"),
+          const Text("Home Sub Page 1"),
           ElevatedButton(
-              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomeSubPage2())),
-              child: Text("Go To Home Sub Page 2")
-          )
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomeSubPage2())),
+              child: const Text("Go To Home Sub Page 2"))
         ],
       ),
     );
@@ -108,7 +105,7 @@ class HomeSubPage2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: Text("SubPage 2"),
       ),

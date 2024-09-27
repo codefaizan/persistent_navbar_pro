@@ -1,30 +1,9 @@
 library persistent_navbar_pro;
 
 import 'package:flutter/material.dart';
+import 'navbar_item.dart';
 
-class NavBarItem {
-  NavBarItem(
-      {
-        this.maintainTabStack=false,
-        required this.icon,
-        required this.label,
-        this.activeIcon,
-        this.backgroundColor,
-        this.tooltip,
-        this.key
-      })
-  {
-    item = BottomNavigationBarItem(icon: icon, activeIcon: activeIcon, label: label, backgroundColor: backgroundColor, tooltip: tooltip, key: key);
-  }
-  Key? key;
-  Widget icon;
-  String? label;
-  Widget? activeIcon;
-  Color? backgroundColor;
-  BottomNavigationBarItem? item;
-  String? tooltip;
-  bool maintainTabStack;
-}
+export 'navbar_item.dart';
 
 class PersistentNavbar extends StatefulWidget {
   const PersistentNavbar({
@@ -78,7 +57,6 @@ class PersistentNavbar extends StatefulWidget {
   final double iconSize;
   final Map<String, WidgetBuilder>? routes;
 
-
   @override
   State<PersistentNavbar> createState() => _PersistentNavbarState();
 }
@@ -90,17 +68,19 @@ class _PersistentNavbarState extends State<PersistentNavbar> {
   @override
   void initState() {
     _currentIndex = widget.initialIndex;
-    _destinationKeys = List<GlobalKey<NavigatorState>>.generate(widget.screens.length, (int index) => GlobalKey<NavigatorState>()).toList();
+    _destinationKeys = List<GlobalKey<NavigatorState>>.generate(
+            widget.screens.length, (int index) => GlobalKey<NavigatorState>())
+        .toList();
     super.initState();
   }
-  changeScreen(int index){
-    if(index == _currentIndex
-        && widget.items[index].maintainTabStack
-        && _destinationKeys![index].currentState!.canPop()){
-        _destinationKeys![index].currentState!.popUntil((route) => route.isFirst);
-    }
-    else if(!widget.items[index].maintainTabStack
-        && _destinationKeys![index].currentState!.canPop()){
+
+  changeScreen(int index) {
+    if (index == _currentIndex &&
+        widget.items[index].maintainTabStack &&
+        _destinationKeys![index].currentState!.canPop()) {
+      _destinationKeys![index].currentState!.popUntil((route) => route.isFirst);
+    } else if (!widget.items[index].maintainTabStack &&
+        _destinationKeys![index].currentState!.canPop()) {
       _destinationKeys![index].currentState!.popUntil((route) => route.isFirst);
     }
     _currentIndex = index;
@@ -136,32 +116,37 @@ class _PersistentNavbarState extends State<PersistentNavbar> {
         ),
         body: IndexedStack(
           index: _currentIndex,
-          children: List.generate(widget.screens.length, (index) => DestinationSetter(screen: widget.screens[index], navKey: _destinationKeys![index], routes: widget.routes,)),
-        )
-    );
+          children: List.generate(
+              widget.screens.length,
+              (index) => DestinationSetter(
+                    screen: widget.screens[index],
+                    navKey: _destinationKeys![index],
+                    routes: widget.routes,
+                  )),
+        ));
   }
 }
 
 class DestinationSetter extends StatelessWidget {
-  const DestinationSetter({super.key, required this.screen, required this.navKey, this.routes});
+  const DestinationSetter(
+      {super.key, required this.screen, required this.navKey, this.routes});
   final Widget screen;
   final Map<String, WidgetBuilder>? routes;
   final GlobalKey<NavigatorState> navKey;
 
-  Future<bool> onWillPop()async{
+  Future<bool> onWillPop() async {
     if (navKey.currentState!.canPop()) {
       return Future.value(true);
     }
     return Future.value(false);
   }
 
-
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvokedWithResult: (didPop, result) async{
-        if(didPop) return;
+      onPopInvokedWithResult: (didPop, result) async {
+        if (didPop) return;
         bool canPop = await onWillPop();
         if (canPop && context.mounted) {
           navKey.currentState!.pop();
@@ -171,14 +156,13 @@ class DestinationSetter extends StatelessWidget {
       },
       child: Navigator(
         key: navKey,
-        // initialRoute: Routes.dashboard,
         onGenerateRoute: (settings) {
           return MaterialPageRoute(
-            maintainState: false,
+            // maintainState: false,
             settings: settings,
             builder: (context) {
-              if(routes != null){
-                if(routes!.containsKey(settings.name)){
+              if (routes != null) {
+                if (routes!.containsKey(settings.name)) {
                   return routes![settings.name]!(context);
                 }
               }
