@@ -2,7 +2,7 @@ name: persistent_navbar_pro
 description: |
   A versatile Flutter bottom navigation bar supporting both named routes and direct widget-based navigation.
 
-version: 0.0.3
+version: 0.0.5
 repository: https://github.com/codefaizan/persistent_navbar_pro
 
 environment:

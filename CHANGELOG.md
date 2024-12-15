@@ -9,3 +9,11 @@
 ## 0.0.3
 
 * Changes to improve docs and formatting
+
+## 0.0.4
+
+* Added public API documentation
+
+## 0.0.5
+
+* Formated dart code
